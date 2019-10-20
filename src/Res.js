@@ -36,7 +36,8 @@ var imagenes = {
     mensaje_perder: "res/mensaje_perder.png",
     nube_idle: "res/Animación-Nube-Est.png",
     nube_ataque: "res/Animación-Nube-Ataque.png",
-    nube_muerte: "res/Animación-Nube-Muerte.png"
+    nube_muerte: "res/Animación-Nube-Muerte.png",
+    recolectable: "res/recolectable.png"
 };
 
 var rutasImagenes = Object.values(imagenes);

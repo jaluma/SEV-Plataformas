@@ -15,6 +15,6 @@ class Enemigo2 extends BaseEnemigo {
     }
 
     isSaltable() {
-        return true
+        return false
     }
 }

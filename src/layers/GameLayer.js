@@ -15,6 +15,7 @@ class GameLayer extends Layer {
 
         this.scrollX = 0;
         this.bloques = [];
+        this.item = []
 
         this.fondo = new Fondo(imagenes.fondo_2, 480 * 0.5, 320 * 0.5);
 
@@ -24,9 +25,13 @@ class GameLayer extends Layer {
         this.fondoPuntos =
             new Fondo(imagenes.icono_puntos, 480 * 0.85, 320 * 0.05);
 
+        this.fondoItems =
+            new Fondo(imagenes.icono_recolectable, 480 * 0.10, 320 * 0.07);
+
 
         this.disparosJugador = []
         this.puntos = new Texto(0, 480 * 0.9, 320 * 0.07);
+        this.puntosItems = new Texto(0, 480 * 0.15, 320 * 0.10);
         this.cargarMapa("res/" + nivelActual + ".txt");
     }
 
@@ -84,13 +89,27 @@ class GameLayer extends Layer {
 
                 this.disparosJugador.splice(i, 1);
                 i = i - 1;
+
+                this.puntos.valor++
             }
         }
 
 
 
 
+        for (var i = 0; i < this.item.length; i++) {
+            this.item[i].actualizar();
+        }
 
+        for (var i = 0; i < this.item.length; i++) {
+            if (this.item[i].colisiona(this.jugador)) {
+                this.espacio.eliminarCuerpoDinamico(this.item[i]);
+                this.item.splice(i, 1);
+                i = i - 1;
+
+                this.puntosItems.valor++;
+            }
+        }
 
 
         this.jugador.actualizar();
@@ -159,6 +178,11 @@ class GameLayer extends Layer {
         }
 
         this.copa.dibujar(this.scrollX);
+        for (var i = 0; i < this.item.length; i++) {
+            this.item[i].dibujar(this.scrollX);
+        }
+
+
         for (var i = 0; i < this.disparosJugador.length; i++) {
             this.disparosJugador[i].dibujar(this.scrollX);
         }
@@ -172,7 +196,9 @@ class GameLayer extends Layer {
 
         // HUD
         this.fondoPuntos.dibujar();
+        this.fondoItems.dibujar();
         this.puntos.dibujar();
+        this.puntosItems.dibujar();
 
         if (!this.pausa && entrada == entradas.pulsaciones) {
             this.botonDisparo.dibujar();
@@ -252,7 +278,14 @@ class GameLayer extends Layer {
                 // modificación para empezar a contar desde el suelo
                 this.espacio.agregarCuerpoDinamico(this.copa);
                 break;
+            case "I":
+                let item = new Recolectable(x, y);
+                item.y = item.y - item.alto / 2;
+                // modificación para empezar a contar desde el suelo
 
+                this.item.push(item)
+                this.espacio.agregarCuerpoDinamico(item);
+                break;
             case "E":
                 var enemigo = new Enemigo(x, y);
 
