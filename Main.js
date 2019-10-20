@@ -6,6 +6,8 @@ var escaladoMinimo = 1;
 // Controles
 var controles = {};
 
+var fps = 30
+
 
 // Capas
 var layer;
@@ -18,12 +20,12 @@ function iniciarJuego() {
     menuLayer = new MenuLayer();
     layer = menuLayer;
 
-    setInterval(loop, 1000 / 30);
+    setInterval(loop, 1000 / fps);
 }
 
 
 
-function loop(){
+function loop() {
     console.log("loop - ")
     layer.actualizar();
     if (entrada == entradas.pulsaciones) {
@@ -35,9 +37,9 @@ function loop(){
     actualizarPulsaciones();
 }
 
-function actualizarPulsaciones () {
-    for(var i=0; i < pulsaciones.length; i++){
-        if ( pulsaciones[i].tipo ==  tipoPulsacion.inicio){
+function actualizarPulsaciones() {
+    for (var i = 0; i < pulsaciones.length; i++) {
+        if (pulsaciones[i].tipo == tipoPulsacion.inicio) {
             pulsaciones[i].tipo = tipoPulsacion.mantener;
         }
     }
@@ -55,8 +57,8 @@ function resize() {
 
     escaladoMinimo = Math.min(escaladoAncho, escaladoAlto);
 
-    canvas.width = canvas.width*escaladoMinimo;
-    canvas.height = canvas.height*escaladoMinimo;
+    canvas.width = canvas.width * escaladoMinimo;
+    canvas.height = canvas.height * escaladoMinimo;
 
-    contexto.scale(escaladoMinimo,escaladoMinimo);
+    contexto.scale(escaladoMinimo, escaladoMinimo);
 }

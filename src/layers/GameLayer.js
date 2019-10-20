@@ -46,7 +46,17 @@ class GameLayer extends Layer {
             this.iniciar();
         }
 
-
+        for (var i = 0; i < this.bloques.length; i++) {
+            if (this.bloques[i].isDestruible() && this.jugador.colisionSuperior(this.bloques[i])) {
+                if (this.bloques[i].estado == estadosTile.roto) {
+                    this.espacio.eliminarCuerpoEstatico(this.bloques[i]);
+                    this.bloques.splice(i, 1);
+                    i = i - 1;
+                } else {
+                    this.bloques[i].destruir();
+                }
+            }
+        }
 
         // Jugador se cae
         if (this.jugador.y > 480) {
@@ -272,6 +282,13 @@ class GameLayer extends Layer {
 
     cargarObjetoMapa(simbolo, x, y) {
         switch (simbolo) {
+            case "W":
+                var tile = new TileDestruible(imagenes.bloque_fondo_muro, x, y);
+                tile.y = tile.y - tile.alto / 2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(tile);
+                this.espacio.agregarCuerpoEstatico(tile);
+                break;
             case "C":
                 this.copa = new Bloque(imagenes.copa, x, y);
                 this.copa.y = this.copa.y - this.copa.alto / 2;
