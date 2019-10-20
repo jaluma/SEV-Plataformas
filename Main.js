@@ -26,7 +26,6 @@ function iniciarJuego() {
 
 
 function loop() {
-    console.log("loop - ")
     layer.actualizar();
     if (entrada == entradas.pulsaciones) {
         layer.calcularPulsaciones(pulsaciones);
@@ -51,7 +50,6 @@ function actualizarPulsaciones() {
 window.addEventListener('load', resize, false);
 
 function resize() {
-    console.log("Resize")
     var escaladoAncho = parseFloat(window.innerWidth / canvas.width);
     var escaladoAlto = parseFloat(window.innerHeight / canvas.height);
 

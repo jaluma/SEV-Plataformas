@@ -1,15 +1,14 @@
-class TileDestruible extends Bloque {
-
+class BloqueDestruible extends Bloque {
     constructor(rutaImagen, x, y) {
         super(rutaImagen, x, y)
 
         this.estado = estadosTile.normal
 
-        this.destruible = 1 * fps
+        this.destruible = 0
     }
 
     destruir() {
-        if (this.destruible > 0) {
+        if (this.destruible >= 0) {
             this.destruible--;
             this.estado = estadosTile.rompiendo
         } else {
@@ -19,12 +18,16 @@ class TileDestruible extends Bloque {
         }
     }
 
+
     isDestruible() {
         return true;
     }
 
-    contactoSuperior(modelo) {
-
+    isDisparable() {
+        return false
     }
 
+    isSaltable() {
+        return false
+    }
 }

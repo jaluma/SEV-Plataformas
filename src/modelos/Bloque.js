@@ -8,4 +8,12 @@ class Bloque extends Modelo {
         return false;
     }
 
+    isSaltable() {
+        return false;
+    }
+
+    isDisparable() {
+        return false;
+    }
+
 }

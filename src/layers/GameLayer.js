@@ -47,14 +47,21 @@ class GameLayer extends Layer {
         }
 
         for (var i = 0; i < this.bloques.length; i++) {
-            if (this.bloques[i].isDestruible() && this.jugador.colisionSuperior(this.bloques[i])) {
-                if (this.bloques[i].estado == estadosTile.roto) {
-                    this.espacio.eliminarCuerpoEstatico(this.bloques[i]);
-                    this.bloques.splice(i, 1);
-                    i = i - 1;
+            if (this.bloques[i].isDestruible()) {
+                if (this.bloques[i].isSaltable() && this.jugador.colisionSuperior(this.bloques[i])) {
+                    this.destruirBloques(i)
                 } else {
-                    this.bloques[i].destruir();
+                    if (this.bloques[i].isDisparable()) {
+                        for (var j = 0; j < this.disparosJugador.length; j++) {
+                            if (this.disparosJugador[j] != null &&
+                                this.disparosJugador[j].vx == 0 &&
+                                this.bloques[i].colisiona(this.disparosJugador[j])) {
+                                this.destruirBloques(i)
+                            }
+                        }
+                    }
                 }
+
             }
         }
 
@@ -160,6 +167,16 @@ class GameLayer extends Layer {
 
 
 
+    }
+
+    destruirBloques(i) {
+        if (this.bloques[i].estado == estadosTile.roto) {
+            this.espacio.eliminarCuerpoEstatico(this.bloques[i]);
+            this.bloques.splice(i, 1);
+            i = i - 1;
+        } else {
+            this.bloques[i].destruir();
+        }
     }
 
     calcularScroll() {
@@ -283,7 +300,14 @@ class GameLayer extends Layer {
     cargarObjetoMapa(simbolo, x, y) {
         switch (simbolo) {
             case "W":
-                var tile = new TileDestruible(imagenes.bloque_fondo_muro, x, y);
+                var tile = new TileDestruible(imagenes.bloque_metal, x, y);
+                tile.y = tile.y - tile.alto / 2;
+                // modificación para empezar a contar desde el suelo
+                this.bloques.push(tile);
+                this.espacio.agregarCuerpoEstatico(tile);
+                break;
+            case "U":
+                var tile = new TileDestruible2(imagenes.bloque_fondo_muro, x, y);
                 tile.y = tile.y - tile.alto / 2;
                 // modificación para empezar a contar desde el suelo
                 this.bloques.push(tile);
