@@ -45,9 +45,13 @@ class BaseEnemigo extends Modelo {
 
 
     impactado() {
-        if (this.estado != estados.muriendo) {
+        if (this.estado != estados.muriendo && this.estado != estados.muerto) {
             this.estado = estados.muriendo;
         }
+    }
+
+    isSaltable() {
+        return false
     }
 
 

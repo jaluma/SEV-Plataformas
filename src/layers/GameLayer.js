@@ -74,8 +74,6 @@ class GameLayer extends Layer {
             }
         }
 
-
-        console.log("disparosJugador: " + this.disparosJugador.length);
         // Eliminar disparos fuera de pantalla
         for (var i = 0; i < this.disparosJugador.length; i++) {
             if (this.disparosJugador[i] != null &&
@@ -105,7 +103,9 @@ class GameLayer extends Layer {
 
         // colisiones
         for (var i = 0; i < this.enemigos.length; i++) {
-            if (this.jugador.colisiona(this.enemigos[i])) {
+            if (this.enemigos[i].isSaltable() && this.jugador.colisionSuperior(this.enemigos[i])) {
+                this.enemigos[i].impactado();
+            } else if (this.jugador.colisiona(this.enemigos[i])) {
                 this.iniciar();
             }
         }

@@ -13,4 +13,8 @@ class Enemigo2 extends BaseEnemigo {
         this.vy = 0;
 
     }
+
+    isSaltable() {
+        return true
+    }
 }
