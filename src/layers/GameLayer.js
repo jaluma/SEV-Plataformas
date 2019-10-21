@@ -140,6 +140,9 @@ class GameLayer extends Layer {
         // colisiones
         for (var i = 0; i < this.enemigos.length; i++) {
             if (this.enemigos[i].isSaltable() && this.jugador.colisionSuperior(this.enemigos[i])) {
+                let x = this.enemigos[i].x - this.jugador.x
+                let refY = (this.jugador.y + this.jugador.alto / 2)
+                let modY = -(this.enemigos[i].y - this.enemigos[i].alto / 2)
                 this.enemigos[i].impactado();
             } else if (this.jugador.colisiona(this.enemigos[i])) {
                 this.iniciar();

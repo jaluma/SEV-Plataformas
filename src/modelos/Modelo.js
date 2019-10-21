@@ -46,8 +46,9 @@ class Modelo {
 
     colisionSuperior(modelo) {
         let x = modelo.x - this.x
-        let y = (this.y + this.alto / 2) - (modelo.y - modelo.alto / 2)
-        return Math.abs(x) <= 5 && y <= 0
+        let refY = (this.y + this.alto / 2)
+        let modY = (modelo.y - modelo.alto / 2)
+        return Math.abs(x) <= 15 && modY - refY <= 10
     }
 
 }
